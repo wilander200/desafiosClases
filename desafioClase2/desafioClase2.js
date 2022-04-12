@@ -8,8 +8,9 @@ class usuario {
     }
 
     getFullName(){
-        console.log(`${this.nombre} ${this.apellido}`)
-    }
+
+        return (`${this.nombre}  ${this.apellido}`)
+    };
 
     countMascotas() {
       const cuenta = this.cuentaMascota++
@@ -80,8 +81,8 @@ maria.addBook("El Show de la vida" , "Martin Cancamo");
 //console.log('\n');
 
 
-const usuario1 = {nombre: pepe.nombre , apellido: pepe.apellido , libros: pepe.getBookNames() , mascotas: pepe.mascotas , cantidad : pepe.countMascotas()};
-const usuario2 = {nombre: maria.nombre , apellido: maria.apellido , libros: maria.getBookNames() , mascotas: maria.mascotas , cantidad : maria.countMascotas()};
+const usuario1 = {nombre: pepe.nombre , apellido: pepe.apellido , nombreCompleto: pepe.getFullName(),  libros: pepe.getBookNames() , mascotas: pepe.mascotas , cantidad : pepe.countMascotas()};
+const usuario2 = {nombre: maria.nombre , apellido: maria.apellido , nombreCompleto: maria.getFullName(), libros: maria.getBookNames() , mascotas: maria.mascotas , cantidad : maria.countMascotas()};
 
 console.log(usuario1);
 console.log('\n');
