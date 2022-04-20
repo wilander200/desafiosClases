@@ -17,7 +17,7 @@ class Contenedor {
                 if (contenido.length == 0 ) {
                     id = 0;
                 } else {
-                    id = dato.length;
+                    id = dato[dato.length-1].id;
                 }
                 id++
                 console.log(id)
@@ -99,4 +99,4 @@ let productos = new Contenedor("./productos.txt");
 //productos.getById(2);
 //productos.getAll();
 //productos.deleteAll();
-//productos.deleteByIdNumber(4)
+//productos.deleteByIdNumber(3)
