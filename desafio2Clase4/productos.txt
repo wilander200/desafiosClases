@@ -1,0 +1,20 @@
+[
+    { 
+        "id": 1, 
+        "title": "Bicicleta de Enduro 29' Doble Suspención", 
+        "price": 1800000,
+        "thumbnail" : "foto1"
+    },
+    {
+       "id": 2, 
+       "title": "Bicicleta de trail 27' Doble Suspención", 
+       "price": 2800000, 
+       "thumbnail": "foto2" 
+    },
+    {
+        "id": 3, 
+        "title": "Bicicleta de downhill 27' Doble Suspención", 
+        "price": 3800000, 
+        "thumbnail": "foto3"
+    }
+]
