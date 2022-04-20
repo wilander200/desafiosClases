@@ -22,7 +22,7 @@ class Contenedor {
                 id++
                 console.log(id)
                 dato.push({id: id, title: title , price: price, thumbnail: thumbnail})
-                fs.writeFile(this.file , JSON.stringify(dato), error => {
+                fs.writeFile(this.file , JSON.stringify(dato, null, 2), error => {
                     if (error) {
                         console.log("hubo un error al escribir")
                     } else {
@@ -64,7 +64,7 @@ class Contenedor {
             } else {
                 let dato =  JSON.parse(contenido);
                 const findProduct = dato.filter(prod => prod.id !== id)
-                fs.writeFile(this.file , JSON.stringify(findProduct), error => {
+                fs.writeFile(this.file , JSON.stringify(findProduct, null, 2), error => {
                     if (error) {
                         console.log("hubo un error al escribir")
                     } else {
@@ -99,4 +99,4 @@ let productos = new Contenedor("./productos.txt");
 //productos.getById(2);
 //productos.getAll();
 //productos.deleteAll();
-//productos.deleteByIdNumber(2)
+//productos.deleteByIdNumber(4)
