@@ -46,13 +46,13 @@ class Contenedor {
         })
     }
 
-    getAll() {
+    getAll(cb) {
         fs.readFile(this.file, 'utf-8', (error, contenido)=>{
             if (error) {
                 console.log("hubo un error en la lectura del archivo");
             } else {
                 let dato =  JSON.parse(contenido);
-                console.log(dato);
+                cb(dato)
             }
         })
     }
@@ -97,6 +97,6 @@ class Contenedor {
 let productos = new Contenedor("./productos.txt");
 //productos.saveObject("carro" , 100000 , "fotox");
 //productos.getById(2);
-//productos.getAll();
+//productos.getAll((dato)=>{console.log(dato);});
 //productos.deleteAll();
 //productos.deleteByIdNumber(3)
