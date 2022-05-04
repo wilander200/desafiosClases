@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "router": "^1.3.7"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "desafio4clase8",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
