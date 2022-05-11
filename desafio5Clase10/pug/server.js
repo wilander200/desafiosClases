@@ -1,5 +1,4 @@
 const express = require('express')
-const handlebars = require('express-handlebars')
 const {Router} = express
 const Contenedor = require('./Contenedor.js');
 
@@ -9,35 +8,30 @@ const PORT = 8080
 
 const app = express();
 
-app.engine('handlebars', handlebars.engine())
-
 app.set('views', './views')
-
-app.set('view engine', 'handlebars')
+app.set('view engine', 'pug')
 
 const routerProductos = new Router()
-
-app.use(express.urlencoded({extended: true}))
-app.use(express.static('public'))
-
+app.use('/productos', routerProductos)
 routerProductos.use(express.json())
 
-app.use('/productos', routerProductos)
+app.use(express.urlencoded({extended: true}))
 
 app.get('/' , (req , res) => {
-    res.render('form', )
+    res.render('form.pug', )
 })
 
 routerProductos.get('/', (req , res) => {
     const producto = productos.getAll()
-    res.render('plantilla' , {
+    res.render('plantilla.pug' , {
         producto : producto,
         productoTrue: producto.length})
 } )
 
 routerProductos.post('/', (req , res) => {
-    const producto = req.body
-    productos.saveProducto(producto)
+    const {title, price, thumbnail} = req.body
+    console.log({title, price, thumbnail})
+    productos.saveProducto({title, price, thumbnail})
     res.redirect('/')
 })
 
