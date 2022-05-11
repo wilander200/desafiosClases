@@ -1,0 +1,21 @@
+<div class="h-100 w-100">
+<h1 class="text-dark text-center my-4">INGRESE PRODUCTOS</h1>
+    <form class="w-75 mx-auto" action="/productos" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Nombre: </label>
+            <input type="text" class="form-control" name="title">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="price">Precio: </label>
+            <input class="form-control" type="text" name="price">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="thumbnail">Foto URL: </label>
+            <input class="form-control" type="text" name="thumbnail">
+        </div>
+        <div class="d-flex justify-content-around align-items-center">
+            <button class="btn btn-outline-dark h-50" >Agregar</button>
+            <a href="/productos" type="button" class="btn btn-outline-dark my-4 h-50">Ver productos</a>
+        </div>    
+    </form>
+    </div>
