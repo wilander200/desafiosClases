@@ -9,7 +9,7 @@ const PORT = 8080
 const app = express();
 
 app.set('views', './views')
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 
 const routerProductos = new Router()
 app.use('/productos', routerProductos)
@@ -18,12 +18,12 @@ routerProductos.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.get('/' , (req , res) => {
-    res.render('form.pug', )
+    res.render('pages/form', )
 })
 
 routerProductos.get('/', (req , res) => {
     const producto = productos.getAll()
-    res.render('plantilla.pug' , {
+    res.render('pages/plantilla' , {
         producto : producto,
         productoTrue: producto.length})
 } )
