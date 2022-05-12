@@ -8,14 +8,15 @@ const PORT = 8080
 
 const app = express();
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 app.set('views', './views')
 app.set('view engine', 'pug')
 
 const routerProductos = new Router()
 app.use('/productos', routerProductos)
-routerProductos.use(express.json())
 
-app.use(express.urlencoded({extended: true}))
 
 app.get('/' , (req , res) => {
     res.render('form.pug', )

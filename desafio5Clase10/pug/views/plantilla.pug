@@ -12,10 +12,10 @@ block contenido
                         th(class="text-center")='Foto'
                         each product in producto
                             tr
-                                td(class="text-center")=this.title
-                                td(class="text-center")=this.price
+                                td(class="text-center")=product.title
+                                td(class="text-center")=product.price
                                 td(class="text-center")
-                                    img(width="50" src=this.thumbnail alt="not found")
+                                    img(width="50" src=product.thumbnail alt="not found")
         else
             h2(class="alert alert-danger")='No hay productos'
         div(class="d-flex w-75 justify-content-end")

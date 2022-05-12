@@ -9,6 +9,9 @@ const PORT = 8080
 
 const app = express();
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 app.engine('handlebars', handlebars.engine())
 
 app.set('views', './views')
@@ -17,10 +20,8 @@ app.set('view engine', 'handlebars')
 
 const routerProductos = new Router()
 
-app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-routerProductos.use(express.json())
 
 app.use('/productos', routerProductos)
 
