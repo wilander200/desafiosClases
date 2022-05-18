@@ -1,8 +1,5 @@
 const socket = io.connect()
 
-
-/* CHAT */
-
 function addMessage(e) {
     preventDefault(e)
     const fecha = new Date()
