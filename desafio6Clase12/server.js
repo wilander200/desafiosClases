@@ -42,13 +42,7 @@ app.get('/', (req , res) => {
     
 io.on('connection', (socket) => {
     console.log('Un cliente se ha conectado!')
-
-    /* PRODUCTOS */
-
     
-
-    /* MENSAJERIA */
-
     const chat = messages.getAll()
     socket.emit('messages', chat)
 
