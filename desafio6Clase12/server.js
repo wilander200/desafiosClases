@@ -2,11 +2,12 @@ const express = require('express')
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 const handlebars = require('express-handlebars')
-const Contenedor = require('./Contenedor.js');
+const Contenedor = require('./public/Contenedor.js');
+const Message = require('./public/Message');
 
 const productos = new Contenedor();
 
-const messages = []
+const messages = new Message('./public/mensajes.txt');
 
 
 const PORT = 8080
@@ -25,8 +26,6 @@ app.set('views', './public/views')
 
 app.set('view engine', 'handlebars')
 
-
-
 app.get('/', (req , res) => {
     const producto = productos.getAll()
     res.render('plantilla' , {
@@ -40,16 +39,25 @@ app.get('/', (req , res) => {
         res.redirect('/')
     })
     
-    io.on('connection', (socket) => {
-        console.log('Un cliente se ha conectado!')
-        socket.emit('messages', messages)
-        
-        socket.on('new-message', data => {
-            messages.push(data)
-            io.sockets.emit('messages', messages)
-        })})
-        
+    
+io.on('connection', (socket) => {
+    console.log('Un cliente se ha conectado!')
 
+    /* PRODUCTOS */
+
+    
+
+    /* MENSAJERIA */
+
+    const chat = messages.getAll()
+    socket.emit('messages', chat)
+
+    socket.on('new-message', dat => {
+        messages.saveMessage(dat)
+        const chat = messages.getAll()
+        io.sockets.emit('messages', chat)
+    })})
+      
         
 httpServer.listen(PORT, () => {
     console.log('servidor http escuchando en el puerto ' + PORT)
