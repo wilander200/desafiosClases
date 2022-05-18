@@ -15,8 +15,11 @@
 
     
 <div class="my-5">
-<div class="h-100 w-100">
 <h1 class="text-dark text-center my-4">INGRESE PRODUCTOS</h1>
+
+{{!-- formulario de los productos --}}
+
+<div class="h-100 w-100">
     <form class="w-75 mx-auto" action="/" method="POST">
         <div class="mb-3">
             <label for="title" class="form-label">Nombre: </label>
@@ -37,6 +40,22 @@
     </div>
 
     {{{body}}}
+
+      {{!-- centro de mensajeria --}}
+
+    <div class="h-100 w-100 mt-5">
+        <h1 class="text-dark text-center my-4">CENTRO DE MENSAJES</h1>
+        
+        <form class="w-75 mx-auto" onsubmit="return addMessage(this)">
+            <input class="form-control my-2" type="email" id="email" placeholder="Su correo electronico" required>
+            <div id="messages" class="text-start"></div>
+            <input class="form-control my-2" type="text" id="text" placeholder="Escriba su mensaje" required>
+            <div class="d-flex justify-content-around align-items-center my-2">
+                <input class="btn btn-outline-dark h-50" type="submit" value="Enviar"></input>
+            </div>
+        </form>
+    </div>
+
   </div>
 
       <script src="../../main.js"></script>
