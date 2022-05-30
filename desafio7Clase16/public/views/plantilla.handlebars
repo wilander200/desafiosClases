@@ -1,0 +1,25 @@
+{{!-- Plantilla con la tabla para mostrar los productos --}}
+
+<div class="h-100 w-100 mt-5">
+    {{#if productoTrue}}
+    <div class="table w-75 mx-auto">
+        <table class="table table-light table-striped">
+            <tr>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Precio</th>
+                <th class="text-center">Foto</th>
+            </tr>
+            {{#each producto}}
+            <tr>
+                <td class="text-center">{{this.title}}</td>
+                <td class="text-center">${{this.price}}</td>
+                <td class="text-center"><img width="50" src={{this.thumbnail}} alt="not found"></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    {{else}}
+    <h3 class="alert alert-danger">No hay productos</h3>
+    {{/if}}
+    </div>
+    
