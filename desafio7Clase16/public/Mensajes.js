@@ -5,8 +5,8 @@ class Message {
         this.knex = knex(options);
     }
 
-    saveMessage({email, fyh , message}) {
-        return this.knex('mensajes').insert({email: email , fyh: fyh , message: message})
+    saveMessage(dat) {
+        return this.knex('mensajes').insert(dat)
             }
 
     getAll() {
