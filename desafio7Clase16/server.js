@@ -49,27 +49,26 @@ app.post('/', (req , res) => {
 })
     
 
-//io.on('connection', msn)
-//
+io.on('connection', msn)
+
 httpServer.listen(PORT, () => {
     console.log('servidor http escuchando en el puerto ' + PORT)
 })
-//
-//async function msn(socket) {
-//    
-//        console.log('Un cliente se ha conectado!')
-//    try {
-//        const chat = await messages.getAll()
-//        socket.emit('messages', chat)
-//
-//        socket.on('new-message', async dat => {
-//            await messages.saveMessage(dat)
-//            const chat = await messages.getAll()
-//            io.sockets.emit('messages', chat)
-//        })
-//    } catch (err) {
-//        console.log(err)
-//    } finally {
-//        messages.close()
-//    }
-//    }
+
+async function msn(socket) {
+        console.log('Un cliente se ha conectado!')
+    try {
+        const chat = await messages.getAll()
+        socket.emit('messages', chat)
+
+        socket.on('new-message', async dat => {
+            await messages.saveMessage(dat)
+            const chat = await messages.getAll()
+            io.sockets.emit('messages', chat)
+        })
+    } catch (err) {
+        console.log(err)
+    } finally {
+        messages.close()
+    }
+    }
