@@ -1,7 +1,6 @@
 const socket = io.connect()
 
 function addMessage(e) {
-    //preventDefault(e)
     const fecha = new Date()
     const date = fecha.toLocaleDateString()
     const hour = fecha.toLocaleTimeString()

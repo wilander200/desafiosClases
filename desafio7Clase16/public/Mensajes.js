@@ -1,28 +1,31 @@
-const fs = require("fs");
+const knex = require('knex')
 
 class Message {
-    constructor (file){
-        this.file = file;
+    constructor (options){
+        this.knex = knex(options);
     }
 
-    saveMessage(dat) {
-        const content = fs.readFileSync(this.file, 'utf-8')
-            let dato = JSON.parse(content);
-            dato.push({email: dat.email, fyh: dat.fyh , message: dat.message})
-            fs.writeFileSync(this.file , JSON.stringify(dato, null, 2), error => {
-                if (error) {
-                    console.log("hubo un error al escribir")
-                } else {
-                    console.log("se pudo usar el SaveObject correctamente")
-                }
-            }
-            )
+    saveMessage(mensaje) {
+        return this.knex('mensajes').insert(mensaje)
             }
 
     getAll() {
-        const arrayProductos = fs.readFileSync(this.file, 'utf-8')
-            let dato =  JSON.parse(arrayProductos);
-            return dato
+        return this.knex('mensajes').select('*')
+    }
+
+    crearTabla() {
+        return this.knex.schema.dropTableIfExists('mensajes')
+            .finally(()=> {
+                return this.knex.schema.createTable('mensajes' , table => {
+                    table.string('email' , 50).primary()
+                    table.string('fyh' , 10).notNullable()
+                    table.string('message' , 50).notNullable()
+                })
+            })
+    }
+
+    close() {
+        this.knex.destroy()
     }
 }
 

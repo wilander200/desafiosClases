@@ -2,13 +2,13 @@ const express = require('express')
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 const handlebars = require('express-handlebars')
-const Contenedor = require('./public/Contenedor.js');
-const Message = require('./public/Mensajes');
+const Contenedor = require('./public/Contenedor.js')
+const Message = require('./public/Mensajes.js')
+const optionsMessages = require('./options/sqlitecon.js')
+const optionsProductos = require('./options/mysqlcon.js')
 
-const productos = new Contenedor();
-
-const messages = new Message('./public/mensajes.txt');
-
+const productos = new Contenedor(optionsProductos);
+const messages = new Message(optionsMessages);
 
 const PORT = 8080
 
@@ -27,32 +27,50 @@ app.set('views', './public/views')
 app.set('view engine', 'handlebars')
 
 app.get('/', (req , res) => {
-    const producto = productos.getAll()
-    res.render('plantilla' , {
+    productos.getAll()
+    .then((producto) => {
+    console.log('los productos en get son: ' + producto)
+     return res.render('plantilla' , {
         producto : producto,
         productoTrue: producto.length})
-    } )
+    })
+    .catch((err) => {console.log(err); throw err})
+    .finally(()=> productos.close())
+})
     
     app.post('/', (req , res) => {
         const producto = req.body
+        console.log('los productos en post son: ' + producto)
         productos.saveProducto(producto)
-        res.redirect('/')
+        .then(() => {
+        return res.redirect('/')
     })
+    .catch((err) => {console.log(err); throw err})
+    .finally(()=> productos.close())
+})
     
-    
-io.on('connection', (socket) => {
-    console.log('Un cliente se ha conectado!')
-    
-    const chat = messages.getAll()
-    socket.emit('messages', chat)
 
-    socket.on('new-message', dat => {
-        messages.saveMessage(dat)
-        const chat = messages.getAll()
-        io.sockets.emit('messages', chat)
-    })})
-      
-        
+//io.on('connection', msn)
+//
 httpServer.listen(PORT, () => {
     console.log('servidor http escuchando en el puerto ' + PORT)
 })
+//
+//async function msn(socket) {
+//    
+//        console.log('Un cliente se ha conectado!')
+//    try {
+//        const chat = await messages.getAll()
+//        socket.emit('messages', chat)
+//
+//        socket.on('new-message', async dat => {
+//            await messages.saveMessage(dat)
+//            const chat = await messages.getAll()
+//            io.sockets.emit('messages', chat)
+//        })
+//    } catch (err) {
+//        console.log(err)
+//    } finally {
+//        messages.close()
+//    }
+//    }
