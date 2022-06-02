@@ -13,7 +13,7 @@ class Contenedor {
                 return this.knex.schema.createTable('productos' , table => {
                     table.increments('id').primary()
                     table.string('title' , 50).notNullable()
-                    table.float('precio')
+                    table.float('price')
                     table.string('thumbnail', 100).notNullable()
                 })
             })

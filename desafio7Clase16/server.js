@@ -29,7 +29,6 @@ app.set('view engine', 'handlebars')
 app.get('/', (req , res) => {
     productos.getAll()
     .then((producto) => {
-    console.log('los productos en get son: ' + producto)
      return res.render('plantilla' , {
         producto : producto,
         productoTrue: producto.length})
@@ -38,15 +37,15 @@ app.get('/', (req , res) => {
     .finally(()=> productos.close())
 })
     
-    app.post('/', (req , res) => {
+app.post('/', (req , res) => {
         const producto = req.body
-        console.log('los productos en post son: ' + producto)
-        productos.saveProducto(producto)
+        productos.saveProducto({title: producto.title , price: producto.price, thumbnail: producto.thumbnail})
         .then(() => {
-        return res.redirect('/')
-    })
-    .catch((err) => {console.log(err); throw err})
-    .finally(()=> productos.close())
+            console.log('producto guradado correctamente en la DB')
+        })
+        .catch((err) => {console.log(err); throw err})
+        .finally(()=> productos.close())
+        res.redirect('/')
 })
     
 
