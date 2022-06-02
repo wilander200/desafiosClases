@@ -47,7 +47,6 @@ app.post('/', (req , res) => {
         .finally(()=> productos.close())
         res.redirect('/')
 })
-    
 
 io.on('connection', msn)
 
@@ -61,7 +60,7 @@ async function msn(socket) {
         const chat = await messages.getAll()
         socket.emit('messages', chat)
 
-        socket.on('new-message', async dat => {
+        socket.on('new-message', async (dat) => {
             await messages.saveMessage(dat)
             const chat = await messages.getAll()
             io.sockets.emit('messages', chat)

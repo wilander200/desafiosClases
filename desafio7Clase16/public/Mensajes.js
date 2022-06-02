@@ -5,8 +5,8 @@ class Message {
         this.knex = knex(options);
     }
 
-    saveMessage(mensaje) {
-        return this.knex('mensajes').insert(mensaje)
+    saveMessage({email, fyh , message}) {
+        return this.knex('mensajes').insert({email: email , fyh: fyh , message: message})
             }
 
     getAll() {
@@ -17,8 +17,10 @@ class Message {
         return this.knex.schema.dropTableIfExists('mensajes')
             .finally(()=> {
                 return this.knex.schema.createTable('mensajes' , table => {
-                    table.string('email' , 50).primary()
-                    table.string('fyh' , 10).notNullable()
+                    table.increments('id').primary()
+                    table.string('email' , 50).notNullable()
+                    table.string('date' , 20).notNullable()
+                    table.string('hour' , 20).notNullable()
                     table.string('message' , 50).notNullable()
                 })
             })
