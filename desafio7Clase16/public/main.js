@@ -17,7 +17,7 @@ function addMessage(e) {
 
 function render(chat) {
     const html = chat.map((elem) => {
-        return (`<div><spam class="fw-bolder text-primary m-2"> ${elem.email}</spam><spam style="color: brown;">[${elem.fyh}</spam> <spam class="fst-italic text-success m-2"> ${elem.message} </spam></div>`)
+        return (`<div><spam class="fw-bolder text-primary m-2"> ${elem.email}</spam><spam style="color: brown;">[${elem.date}  ${elem.hour}]</spam> <spam class="fst-italic text-success m-2"> ${elem.message} </spam></div>`)
     })
             .join("  ")
         document.getElementById("messages").innerHTML = html

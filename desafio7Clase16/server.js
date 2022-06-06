@@ -34,17 +34,17 @@ app.get('/', (req , res) => {
         productoTrue: producto.length})
     })
     .catch((err) => {console.log(err); throw err})
-    .finally(()=> productos.close())
+    //.finally(()=> productos.close())
 })
     
 app.post('/', (req , res) => {
         const producto = req.body
-        productos.saveProducto({title: producto.title , price: producto.price, thumbnail: producto.thumbnail})
+        productos.saveProducto(producto)
         .then(() => {
             console.log('producto guradado correctamente en la DB')
         })
         .catch((err) => {console.log(err); throw err})
-        .finally(()=> productos.close())
+        //.finally(()=> productos.close())
         res.redirect('/')
 })
 
@@ -67,7 +67,8 @@ async function msn(socket) {
         })
     } catch (err) {
         console.log(err)
-    } finally {
-        messages.close()
-    }
+    } 
+    //finally {
+    //    messages.close()
+    //}
     }

@@ -19,8 +19,8 @@ class Contenedor {
             })
         }
         
-    saveProducto({title, price, thumbnail}) {
-            return this.knex('productos').insert({title: title , price: Number(price), thumbnail: thumbnail})
+    saveProducto(prod) {
+            return this.knex('productos').insert(prod)
         }
         
     getAll() {
