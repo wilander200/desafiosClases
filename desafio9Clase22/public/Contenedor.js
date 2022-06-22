@@ -1,34 +1,52 @@
-const knex = require('knex')
+//const knex = require('knex')
 
-const productos = []
+//const productos = []
 
 class Contenedor {
     constructor (optionproducto){
-        this.knex = knex(optionproducto)
+        //this.knex = knex(optionproducto);
+        this.productos = [];
     }
 
-    crearTabla() {
-        return this.knex.schema.dropTableIfExists('productos')
-            .finally(()=> {
-                return this.knex.schema.createTable('productos' , table => {
-                    table.increments('id').primary()
-                    table.string('title' , 50).notNullable()
-                    table.float('price')
-                    table.string('thumbnail', 100).notNullable()
-                })
-            })
-        }
-        
-    saveProducto(prod) {
-            return this.knex('productos').insert(prod)
-        }
-        
-    getAll() {
-            return this.knex('productos').select('*')
+    //crearTabla() {
+    //    return this.knex.schema.dropTableIfExists('productos')
+    //        .finally(()=> {
+    //            return this.knex.schema.createTable('productos' , table => {
+    //                table.increments('id').primary()
+    //                table.string('title' , 50).notNullable()
+    //                table.float('price')
+    //                table.string('thumbnail', 100).notNullable()
+    //            })
+    //        })
+    //    }
+    //    
+    //saveProducto(prod) {
+    //        return this.knex('productos').insert(prod)
+    //    }
+    //    
+    //getAll() {
+    //        return this.knex('productos').select('*')
+    //    }
+//
+    //close() {
+    //    this.knex.destroy()
+    //}
+//
+    getAllTest() {
+        return [...this.productos]
+    }
+
+    SaveProductoTest(prod){
+        let newId
+        if (this.productos.length ==0) {
+            newId = 1
+        } else {
+            newId = this.productos[this.productos.length - 1].id +1
         }
 
-    close() {
-        this.knex.destroy()
+        const newProd = {...prod , id: newId}
+        this.productos.push(newProd)
+        return newProd
     }
     
     //saveProductoById(id, {title, price, thumbnail}) {
@@ -56,7 +74,7 @@ class Contenedor {
     //    this.productos = filterProductos
     //    return this.productos
     //}
-    }
+}
 
 
 module.exports = Contenedor;

@@ -2,13 +2,15 @@ const express = require('express')
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 const handlebars = require('express-handlebars')
-const Contenedor = require('./public/Contenedor.js')
+//const Contenedor = require('./public/Contenedor.js')
 const Message = require('./public/Mensajes.js')
 const optionsMessages = require('./options/sqlitecon.js')
 const optionsProductos = require('./options/mysqlcon.js')
+const ApiProductosTets = require('./api/productos-tes.js')
 
-const productos = new Contenedor(optionsProductos);
+//const productos = new Contenedor(optionsProductos);
 const messages = new Message(optionsMessages);
+const productosTest = new ApiProductosTets();
 
 const PORT = 8080
 
@@ -26,27 +28,33 @@ app.set('views', './public/views')
 
 app.set('view engine', 'handlebars')
 
-app.get('/', (req , res) => {
-    productos.getAll()
-    .then((producto) => {
-     return res.render('plantilla' , {
-        producto : producto,
-        productoTrue: producto.length})
-    })
-    .catch((err) => {console.log(err); throw err})
+// PRODUCTOS 
+
+app.get('/', async (req , res) => {
+    //productos.getAll()
+    try{
+        await productosTest.popular()
+        let prod = await productosTest.getAllTest();
+        res.render('plantilla' , {
+            producto : prod,
+            productoTrue: prod.length})
+    } catch (err) {
+         console.log(err); throw err
+    }
 })
     
-app.post('/', (req , res) => {
-        const producto = req.body
-        productos.saveProducto(producto)
-        .then(() => {
-            console.log('producto guradado correctamente en la DB')
-        })
-        .catch((err) => {console.log(err); throw err})
-        res.redirect('/')
-})
+//app.post('/', async (req , res) => {
+//        const producto = req.body
+//        //productos.saveProducto(producto)
+//        await productosTest.SaveProductoTest(producto)
+//        .then(() => {
+//            console.log('producto guradado correctamente en la DB')
+//        })
+//        .catch((err) => {console.log(err); throw err})
+//        res.redirect('/')
+//})
 
-// mensajeria
+// MENSAJERIA 
 
 io.on('connection', msn)
 
