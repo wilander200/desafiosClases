@@ -1,0 +1,10 @@
+[
+  {
+    "email": "jlmeyer@iaustralis.cl",
+    "fyh": {
+      "date": "23/5/2022",
+      "hour": "9:03:19"
+    },
+    "message": "El Real no se traciona"
+  }
+]
