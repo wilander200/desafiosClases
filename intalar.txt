@@ -1,0 +1,9 @@
+npm i handlebars  
+
+npm i knex sqlite3      
+
+npx gitignore node      
+
+npm i knex    
+
+npm i express socket.io     
