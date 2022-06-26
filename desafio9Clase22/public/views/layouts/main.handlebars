@@ -44,8 +44,13 @@
             <div class="h-100 w-100 mt-5">
                 <h1 class="text-dark text-center my-4">CENTRO DE MENSAJES</h1>
 
-                <form class="w-75 mx-auto" onsubmit="return addMessage(this)">
+                <form class="w-100 mx-auto" onsubmit="return addMessage(this)">
                     <input class="form-control my-2" type="email" id="email" placeholder="Su correo electronico" required>
+                    <input class="form-control my-2" type="text" id="nombreUsuario" placeholder="Escriba su nombre">
+                    <input class="form-control my-2" type="text" id="apellidoUsuario" placeholder="Escriba su apellido">
+                    <input class="form-control my-2" type="text" id="edadUsuario" placeholder="Coloque su edad">
+                    <input class="form-control my-2" type="text" id="aliasUsuario" placeholder="Escriba su alias">
+                    <input class="form-control my-2" type="text" id="fotoUsuario" placeholder="Inserte el URL de su avatar">
                     <div id="messages" class="text-start"></div>
                     <input class="form-control my-2" type="text" id="text" placeholder="Escriba su mensaje" required>
                     <div class="d-flex justify-content-around align-items-center my-2">

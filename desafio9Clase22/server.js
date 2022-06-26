@@ -4,12 +4,12 @@ const { Server: IOServer } = require('socket.io')
 const handlebars = require('express-handlebars')
 //const Contenedor = require('./public/Contenedor.js')
 const Message = require('./public/Mensajes.js')
-const optionsMessages = require('./options/sqlitecon.js')
-const optionsProductos = require('./options/mysqlcon.js')
+//const optionsMessages = require('./options/sqlitecon.js')
+//const optionsProductos = require('./options/mysqlcon.js')
 const ApiProductosTets = require('./api/productos-tes.js')
 
 //const productos = new Contenedor(optionsProductos);
-const messages = new Message(optionsMessages);
+const messages = new Message('./db/mensajes.txt');
 const productosTest = new ApiProductosTets();
 
 const PORT = 8080
@@ -30,7 +30,7 @@ app.set('view engine', 'handlebars')
 
 // PRODUCTOS 
 
-app.get('/', async (req , res) => {
+app.get('/api/productos-test', async (req , res) => {
     //productos.getAll()
     try{
         await productosTest.popular()

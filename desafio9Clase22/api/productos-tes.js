@@ -9,7 +9,7 @@ class ApiProductosTest extends Contenedor {
 
     popular () {
         const nuevoTest = []
-        for (let i = 0; i < 6 ; i++) {
+        for (let i = 0; i < 5 ; i++) {
             const nuevoProducto = generadorProductos();
             const saveProducto = this.SaveProductoTest(nuevoProducto)
             nuevoTest.push(saveProducto)
