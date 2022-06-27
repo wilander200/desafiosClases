@@ -1,63 +1,7 @@
 [
   {
     "author": {
-      "email": "eurmeneta@construk.cl",
-      "nombre": "wilander",
-      "apellido": "urmeneta",
-      "edad": "100",
-      "alias": "wilander200",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "21:11:56",
-    "message": "prueba de mensajes",
-    "id": 13
-  },
-  {
-    "author": {
-      "email": "eurmeneta@construk.cl",
-      "nombre": "wilander",
-      "apellido": "urmeneta",
-      "edad": "100",
-      "alias": "wilander200",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "21:14:07",
-    "message": "prueba de mensajes",
-    "id": 14
-  },
-  {
-    "author": {
-      "email": "eurmeneta@construk.cl",
-      "nombre": "wilander",
-      "apellido": "urmeneta",
-      "edad": "100",
-      "alias": "wilander200",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "21:15:33",
-    "message": "prueba de mensajes",
-    "id": 15
-  },
-  {
-    "author": {
-      "email": "eurmeneta@construk.cl",
-      "nombre": "wilander",
-      "apellido": "urmeneta",
-      "edad": "100",
-      "alias": "wilander200",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "21:17:00",
-    "message": "prueba de mensajes",
-    "id": 16
-  },
-  {
-    "author": {
-      "email": "w.velazco@cpmproyectos.cl",
+      "email": "wilandervelazco@gmail.com",
       "nombre": "wilander",
       "apellido": "velazco",
       "edad": "35",
@@ -65,92 +9,22 @@
       "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
     },
     "date": "26/6/2022",
-    "hour": "21:37:34",
-    "message": "que lo que",
-    "id": 17
+    "hour": "22:51:35",
+    "message": "prueba de mensajes",
+    "id": 1
   },
   {
     "author": {
       "email": "eurmeneta@construk.cl",
       "nombre": "eduardo",
       "apellido": "urmeneta",
-      "edad": "35",
-      "alias": "eduardinho",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "22:07:11",
-    "message": "carro rojo",
-    "id": 18
-  },
-  {
-    "author": {
-      "email": "eurmeneta@construk.cl",
-      "nombre": "eduardo",
-      "apellido": "urmeneta",
-      "edad": "35",
-      "alias": "eduardinho",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "22:07:59",
-    "message": "carro rojo",
-    "id": 19
-  },
-  {
-    "author": {
-      "email": "MAURICIO.REYES@FULLTEC.CL",
-      "nombre": "julian",
-      "apellido": "meller",
       "edad": "45",
-      "alias": "juli",
+      "alias": "eduardinho",
       "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-1024.png"
     },
     "date": "26/6/2022",
-    "hour": "22:10:29",
-    "message": "que lo que",
-    "id": 20
-  },
-  {
-    "author": {
-      "email": "w.velazco@cpmproyectos.cl",
-      "nombre": "wilander",
-      "apellido": "velazco",
-      "edad": "35",
-      "alias": "wilander200",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "22:12:22",
-    "message": "mdmdmdmd",
-    "id": 21
-  },
-  {
-    "author": {
-      "email": "w.velazco@cpmproyectos.cl",
-      "nombre": "wilander",
-      "apellido": "velazco",
-      "edad": "35",
-      "alias": "wilander200",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
-    },
-    "date": "26/6/2022",
-    "hour": "22:14:40",
-    "message": "mdmdmdmd",
-    "id": 22
-  },
-  {
-    "author": {
-      "email": "LEONARDO.GALVEZ@TREI.CL",
-      "nombre": "leonardo",
-      "apellido": "galvez",
-      "edad": "23",
-      "alias": "leo",
-      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-1024.png"
-    },
-    "date": "26/6/2022",
-    "hour": "22:17:54",
-    "message": "prueba de mensajes",
-    "id": 23
+    "hour": "22:53:47",
+    "message": "prueba de mensajes 2",
+    "id": 2
   }
 ]

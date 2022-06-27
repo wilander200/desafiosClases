@@ -60,9 +60,9 @@ app.get('/api/productos-test', async (req , res) => {
 
 const author = new schema.Entity('author' , {} , {idAttribute: 'email'})
 
-const mensajeria = new schema.Entity('mensajeria', {authores: author}, {idAttribute: 'id'})
+const mensajeria = new schema.Entity('messages', {authores: author}, {idAttribute: 'id'})
 
-const schemaChat = new schema.Entity('chat', {mensajes: [mensajeria]}, {idAttribute: 'id'})
+const schemaChat = new schema.Entity('mensajes', {mensajes: [mensajeria]} , {idAttribute: 'id'})
 
 // MENSAJERIA 
 

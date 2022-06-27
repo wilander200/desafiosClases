@@ -4,9 +4,9 @@ const socket = io.connect()
 
 const author = new normalizr.schema.Entity('author', {}, {idAttribute: 'email'})
 
-const mensajeria = new normalizr.schema.Entity('mensajeria', {authores: author},{idAttribute: 'id'})
+const mensajeria = new normalizr.schema.Entity('messages', {authores: author},{idAttribute: 'id'})
 
-const schemaChat = new normalizr.schema.Entity('chat', {mensajes: [mensajeria]},{idAttribute: 'id'})
+const schemaChat = new normalizr.schema.Entity('mensajes', {mensajes: [mensajeria]},{idAttribute: 'id'})
 
 function addMessage(e) {
     //preventDefault(e)
@@ -39,7 +39,9 @@ socket.on("messages", chatNormalizado => {
     const tamanoNormalizado = JSON.stringify(chatNormalizado).length
     const tamanoDesnormalizado = JSON.stringify(chatDesnormalizado).length
 
-    const porcentajeChat = tamanoNormalizado/tamanoDesnormalizado*100
+    const porcentaje = ((tamanoNormalizado-tamanoDesnormalizado)/tamanoDesnormalizado*100)
+
+    const porcentajeChat = `<div>Porcentaje de comprimido: ${Math.round(porcentaje)} %</div>`
 
     document.getElementById("porcentajeNormalizado").innerHTML = porcentajeChat
 
