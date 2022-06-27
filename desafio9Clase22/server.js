@@ -7,6 +7,8 @@ const Message = require('./public/Mensajes.js')
 //const optionsMessages = require('./options/sqlitecon.js')
 //const optionsProductos = require('./options/mysqlcon.js')
 const ApiProductosTets = require('./api/productos-tes.js')
+const {normalize, denormalize, schema} = require('normalizr')
+const util = require('util')
 
 //const productos = new Contenedor(optionsProductos);
 const messages = new Message('./db/mensajes.txt');
@@ -54,6 +56,14 @@ app.get('/api/productos-test', async (req , res) => {
 //        res.redirect('/')
 //})
 
+/* ESQUEMAS A NORMALIZAR */
+
+const author = new schema.Entity('author' , {} , {idAttribute: 'email'})
+
+const mensajeria = new schema.Entity('mensajeria', {authores: author}, {idAttribute: 'id'})
+
+const schemaChat = new schema.Entity('chat', {mensajes: [mensajeria]}, {idAttribute: 'id'})
+
 // MENSAJERIA 
 
 io.on('connection', msn)
@@ -61,6 +71,10 @@ io.on('connection', msn)
 httpServer.listen(PORT, () => {
     console.log('servidor http escuchando en el puerto ' + PORT)
 })
+
+function print (objeto) {
+    console.log(util.inspect(objeto , false, 12, true))
+}
 
 async function msn(socket) {
         console.log('Un cliente se ha conectado!')
@@ -71,7 +85,9 @@ async function msn(socket) {
         socket.on('new-message', async (dat) => {
             await messages.saveMessage(dat)
             const chat = await messages.getAll()
-            io.sockets.emit('messages', chat)
+            const formatoChat = {id:'mensajes' , mensajes: chat}
+            const chatNormalizado = normalize(formatoChat , schemaChat)
+            io.sockets.emit('messages', chatNormalizado)
         })
     } catch (err) {
         console.log(err)
