@@ -80,7 +80,9 @@ async function msn(socket) {
         console.log('Un cliente se ha conectado!')
     try {
         const chat = await messages.getAll()
-        socket.emit('messages', chat)
+        const formatoChat = {id:'mensajes' , mensajes: chat}
+        const chatNormalizado = normalize(formatoChat , schemaChat)
+        io.sockets.emit('messages', chatNormalizado)
 
         socket.on('new-message', async (dat) => {
             await messages.saveMessage(dat)
@@ -88,6 +90,7 @@ async function msn(socket) {
             const formatoChat = {id:'mensajes' , mensajes: chat}
             const chatNormalizado = normalize(formatoChat , schemaChat)
             io.sockets.emit('messages', chatNormalizado)
+            
         })
     } catch (err) {
         console.log(err)

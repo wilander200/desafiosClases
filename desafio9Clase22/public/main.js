@@ -2,9 +2,9 @@ const socket = io.connect()
 
 //SCHEMA DE DENORMALIZACION 
 
-const author = new normalizr.schema.Entity('author', {}, {idAttribute: 'id'})
+const author = new normalizr.schema.Entity('author', {}, {idAttribute: 'email'})
 
-const mensajeria = new normalizr.schema.Entity('mensajeria', {authores: author},{idAttribute: '_id'})
+const mensajeria = new normalizr.schema.Entity('mensajeria', {authores: author},{idAttribute: 'id'})
 
 const schemaChat = new normalizr.schema.Entity('chat', {mensajes: [mensajeria]},{idAttribute: 'id'})
 
@@ -30,12 +30,9 @@ function addMessage(e) {
     return false
 }
 
-function render(chatNormalizado) {
-    console.log('chat normalizado', chatNormalizado)
+socket.on("messages", chatNormalizado => {
 
     const chatDesnormalizado = normalizr.denormalize(chatNormalizado.result, schemaChat, chatNormalizado.entities)
-
-    console.log('chat desnormailzado', chatDesnormalizado)
 
     const mensajes = chatDesnormalizado.mensajes
 
@@ -51,6 +48,4 @@ function render(chatNormalizado) {
     })
             .join("  ")
         document.getElementById("messages").innerHTML = html
-    }
-
-socket.on("messages", function(chatNormalizado) {render(chatNormalizado)})
+    })
