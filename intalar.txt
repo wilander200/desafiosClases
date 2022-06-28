@@ -6,4 +6,23 @@ npx gitignore node
 
 npm i knex    
 
-npm i express socket.io     
+npm i express socket.io
+
+npm i normalizr
+
+npm install @faker-js/faker
+
+npm i mysql  
+
+npm i express-handlebars  
+
+npm i cookie-parser
+
+npm i express-session
+
+npm i redis connect-redis
+
+npm i connect-mongo
+
+
+
