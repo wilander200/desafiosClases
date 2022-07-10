@@ -12,6 +12,9 @@ const util = require('util')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const passport = require('passport')
+const { Console } = require('console')
+const LocalStrategy = require('passport-local').Strategy
 
 const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
 
@@ -48,41 +51,96 @@ app.set('views', './public/views')
 
 app.set('view engine', 'handlebars')
 
-//REGISTER
+//PASSPORT REGISTRO
+
 const usuarios = []
+console.log(usuarios)
 
-app.post('/api/registro' , async (req, res) => {
-    const {userName , userPassword} = req.body
-    const usuario = usuarios.find(usuario => usuario.userName == userName)
-    if (usuario)  {
-        return res.render('errorRegistro', {
-            userName : userName
-        })
+passport.use('register', new LocalStrategy({
+    passReqToCallback: true,
+}, (req, username, password, done) => {
+
+    const usuario = usuarios.find(usuario => usuario.username == username)
+
+    if (usuario) {
+        return done ('el usuario ya se encuentra registrado')
     }
-    usuarios.push ({userName , userPassword})
-    res.redirect('/api/login')
 
+    const user = {
+        username, 
+        password
+    }
+    
+    usuarios.push(user)
+
+    return done(null, user)
+}))
+
+// PASSPORT LOGIN 
+
+passport.use('login', new LocalStrategy((username, password, done) => {
+
+    const user = usuarios.find(usuario => usuario.username == username)
+    if (!user) {
+        return done(null, false)
+    }
+
+    if (user.password != password) {
+        return done(null, false)
+    }
+
+    user.contador = 0 
+
+    return done(null,user)
+}))
+
+//SERIALIZAR Y DESERIALIZAR
+
+passport.serializeUser(function(user, done) {
+    done(null, user.username)
+  })
+  
+  passport.deserializeUser(function(username, done) {
+    const usuario = usuarios.find(usuario => usuario.username == username)
+    done(null, usuario)
+  })
+
+//MIDELWARES DE PASSPORT
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+function autenticacion (req, res, next) {
+    if (req.isAuthenticated()) {
+        next()
+    } else {
+        res.redirect('/api/login')
+    }
+}
+
+//REGISTER
+
+app.post('/api/registro' , passport.authenticate('register', {failureRedirect: '/api/errorRegistro', successRedirect: '/api/login'}))
+
+app.get('/api/errorRegistro', (req, res) => {
+    res.render('errorRegistro' , {})
 })
 
-app.get('/api/registro', async (req, res) => {
-    try{
-        await res.render('registro' , {})
-    } catch (err) {
-         console.log(err); throw err
-    }
+app.get('/api/registro', (req, res) => {
+    res.render('registro' , {})
 })
 
 //lOGOUT
 
 app.post('/api/logout' , async (req, res) => {
-    let userName = await req.session.nombre
-    console.log('nombre de logout',userName)
+    let username = await req.session.nombre
+    console.log('nombre de logout',username)
     await req.session.destroy(err => {
         if (err) {
             res.json({error: 'olvidar', descripcion: err})
         } else {
             res.render('logout' , {
-                userName : userName
+                username : username
             })
         }
     })
@@ -90,48 +148,45 @@ app.post('/api/logout' , async (req, res) => {
 
 //LOGIN
 
-app.post('/api/login' , (req, res) => {
-    const {userName , userPassword} = req.body
+app.post('/api/login' , passport.authenticate('login', {failureRedirect: '/api/errorLogin', successRedirect: '/api/productos-test'}))
 
-    const usuario = usuarios.find(
-        usuario = usuario.userName == userName && usuario.userPassword == userPassword
-    )
-
-    if (!usuario) {
-        return res.render('errorLogin')
-    }
-
-    if (req.session.contador) {
-        req.session.contador++
-        res.redirect('/api/productos-test')
-    } else {
-        req.session.contador = 1
-        req.session.nombre = req.body.userName
-        res.redirect('/api/productos-test')
-    }
+app.get('/api/login', (req , res) => {
+    res.render('login' , {})
 })
 
-app.get('/api/login', async (req , res) => {
-    //productos.getAll()
-        await res.render('login' , {})
+app.get('/api/errorLogin',(req, res) => {
+    res.render('errorLogin' , {})
 })
 
 //PRODUCTOS
 
-app.get('/api/productos-test', async (req , res) => {
+app.get('/api/productos-test', autenticacion, (req , res) => {
     //productos.getAll()
-    let userName = await req.session.nombre
+
+    if (!req.user.contador) {
+        req.user.contador = 0
+    } 
+
+    req.user.contador++
+
+    let username = req.session.nombre
     console.log('el username en logged es:', req.session.nombre)
     try{
-        await productosTest.popular()
-        let prod = await productosTest.getAllTest();
+        productosTest.popular()
+        let prod = productosTest.getAllTest();
         res.render('plantilla' , {
             producto : prod,
             productoTrue: prod.length,
-            userName: userName})
+            username: username})
     } catch (err) {
          console.log(err); throw err
     }
+})
+
+//INICIO 
+
+app.get('/' , autenticacion, (req, res) => {
+    res.redirect('/api/productos-test')
 })
 
 
