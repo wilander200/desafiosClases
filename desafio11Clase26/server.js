@@ -48,18 +48,31 @@ app.set('views', './public/views')
 
 app.set('view engine', 'handlebars')
 
-// PRODUCTOS 
+//REGISTER
+const usuarios = []
 
-app.post('/api/login' , async (req, res) => {
-    if (req.session.contador) {
-        req.session.contador++
-        res.redirect('/api/loged')
-    } else {
-        req.session.contador = 1
-        req.session.nombre = req.body.userName
-        res.redirect('/api/loged')
+app.post('/api/registro' , async (req, res) => {
+    const {userName , userPassword} = req.body
+    const usuario = usuarios.find(usuario => usuario.userName == userName)
+    if (usuario)  {
+        return res.render('errorRegistro', {
+            userName : userName
+        })
+    }
+    usuarios.push ({userName , userPassword})
+    res.redirect('/api/login')
+
+})
+
+app.get('/api/registro', async (req, res) => {
+    try{
+        await res.render('registro' , {})
+    } catch (err) {
+         console.log(err); throw err
     }
 })
+
+//lOGOUT
 
 app.post('/api/logout' , async (req, res) => {
     let userName = await req.session.nombre
@@ -75,16 +88,37 @@ app.post('/api/logout' , async (req, res) => {
     })
 })
 
-app.get('/api/login', async (req , res) => {
-    //productos.getAll()
-    try{
-        await res.render('login' , {})
-    } catch (err) {
-         console.log(err); throw err
+//LOGIN
+
+app.post('/api/login' , (req, res) => {
+    const {userName , userPassword} = req.body
+
+    const usuario = usuarios.find(
+        usuario = usuario.userName == userName && usuario.userPassword == userPassword
+    )
+
+    if (!usuario) {
+        return res.render('errorLogin')
+    }
+
+    if (req.session.contador) {
+        req.session.contador++
+        res.redirect('/api/productos-test')
+    } else {
+        req.session.contador = 1
+        req.session.nombre = req.body.userName
+        res.redirect('/api/productos-test')
     }
 })
 
-app.get('/api/loged', async (req , res) => {
+app.get('/api/login', async (req , res) => {
+    //productos.getAll()
+        await res.render('login' , {})
+})
+
+//PRODUCTOS
+
+app.get('/api/productos-test', async (req , res) => {
     //productos.getAll()
     let userName = await req.session.nombre
     console.log('el username en logged es:', req.session.nombre)
