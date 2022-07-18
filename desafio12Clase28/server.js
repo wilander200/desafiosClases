@@ -11,9 +11,8 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const ClassUserMDB = require('./public/ClaseUsuariosMDB.js')
 const parseArgs = require('minimist')
+const dotenv = require('dotenv').config()
 
-const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
-const messages = new Message('./db/mensajes.txt');
 
 //CONFIGURACION DEL MINIMIST
 const options = {
@@ -21,6 +20,15 @@ const options = {
     default: {PORT: 8080}
 }
 const {PORT} = parseArgs(process.argv.slice(2), options)
+
+//LLAMADO A LOS DATOS DEL DOTENV
+const urlMensajes = process.env.URL_MENSAJES_DB
+const urlSession = process.env.URL_SESSION_MONGODB
+const secretWord = process.env.SESSION_SECRETWORD
+
+
+const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
+const messages = new Message(urlMensajes);
 
 
 const app = express();
@@ -33,10 +41,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: 'mongodb+srv://wilander200:Wilander.200@cluster0.pw5qlwv.mongodb.net/session?retryWrites=true&w=majority',
+        mongoUrl: urlSession,
         mongoOptions:advancedOptions
     }),
-    secret: 'ecommerceDesafio',
+    secret: secretWord,
     resave: false,
     saveUninitialized: false,
     cookie: {

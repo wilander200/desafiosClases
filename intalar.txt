@@ -18,11 +18,24 @@ npm i express-handlebars
 
 npm i cookie-parser
 
-npm i express-session
+npm i express-session session-file-store
 
 npm i redis connect-redis
 
 npm i connect-mongo
+
+npm i minimist
+
+npm i bcrypt
+
+npm i mongoose
+
+npm i passport
+
+npm i passport-local
+
+npm i dotenv
+
 
 
 
