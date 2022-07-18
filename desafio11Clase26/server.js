@@ -3,7 +3,6 @@ const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 const handlebars = require('express-handlebars')
 const Message = require('./public/Mensajes.js')
-const ApiProductosTets = require('./api/productos-tes.js')
 const {normalize, schema} = require('normalizr')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
@@ -14,7 +13,6 @@ const ClassUserMDB = require('./public/ClaseUsuariosMDB.js')
 
 const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
 const messages = new Message('./db/mensajes.txt');
-const productosTest = new ApiProductosTets();
 
 const PORT = 8080
 
@@ -22,7 +20,6 @@ const app = express();
 const httpServer = new HttpServer(app)
 const io = new IOServer(httpServer)
 
-//app.use(require('./routes/index.routes'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use(express.json())
@@ -108,83 +105,7 @@ passport.serializeUser(function(user, done) {
 app.use(passport.initialize())
 app.use(passport.session())
 
-function autenticacion (req, res, next) {
-    if (req.isAuthenticated()) {
-        next()
-    } else {
-        res.redirect('/api/login')
-    }
-}
-
-//REGISTER
-
-app.post('/api/registro' , passport.authenticate('register', {failureRedirect: '/api/errorRegistro', successRedirect: '/api/login'}))
-
-app.get('/api/errorRegistro', async (req, res) => {
-    let username = await req.session.user
-    console.log(username, 'del error')
-    res.render('errorRegistro' , {username : username})
-})
-
-app.get('/api/registro', (req, res) => {
-    res.render('registro' , {})
-})
-
-//lOGOUT
-
-app.post('/api/logout' , async (req, res) => {
-    let username = await req.session.user
-    console.log('nombre de logout',username)
-    await req.session.destroy(err => {
-        if (err) {
-            res.json({error: 'olvidar', descripcion: err})
-        } else {
-            res.render('logout' , {
-                username : username
-            })
-        }
-    })
-})
-
-//LOGIN
-
-app.post('/api/login' , passport.authenticate('login', {failureRedirect: '/api/errorLogin', successRedirect: '/api/productos-test'}))
-
-app.get('/api/login', (req , res) => {
-    res.render('login' , {})
-})
-
-app.get('/api/errorLogin',(req, res) => {
-    res.render('errorLogin' , {})
-})
-
-//PRODUCTOS
-
-app.get('/api/productos-test', autenticacion, async (req , res) => {
-    if (!req.user.contador) {
-        req.user.contador = 0
-    } 
-    req.user.contador++
-
-    let username = await req.user.name
-    console.log('el username en logged es:', username)
-    try{
-        productosTest.popular()
-        let prod = productosTest.getAllTest();
-        res.render('plantilla' , {
-            producto : prod,
-            productoTrue: prod.length,
-            username: username})
-    } catch (err) {
-         console.log(err); throw err
-    }
-})
-
-//INICIO 
-
-app.get('/' , autenticacion, (req, res) => {
-    res.redirect('/api/productos-test')
-})
+app.use(require('./routes/index.routes'))
 
 
 /* ESQUEMAS A NORMALIZAR */
