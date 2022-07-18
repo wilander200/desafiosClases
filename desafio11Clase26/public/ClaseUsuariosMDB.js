@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const models = require("../models/User.js")
+const bcrypt = require('bcryptjs')
 
 ReadFromDB();
 
@@ -35,6 +36,16 @@ class ClassUser {
     console.log('se pudo guardar el usuario correctamente')
     return newUser
     }
+
+    async encryptPassword (password) {
+        const salt = await bcrypt.genSalt(10)
+        return await bcrypt.hash(password, salt)
+    }
+    
+    async matchPassword (password , userLog) {
+        return await bcrypt.compare(password, userLog)
+    }
+
 }
 
 module.exports = ClassUser;

@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const passport = require('passport')
-const { Console } = require('console')
 const LocalStrategy = require('passport-local').Strategy
 const ClassUserMDB = require('./public/ClaseUsuariosMDB.js')
 
@@ -57,14 +56,14 @@ passport.use('register', new LocalStrategy({
 
     const users = await user.getAll()
     const usuario = users.find(usuario => usuario.username == username)
-
     if (usuario) {
-        return done ('el usuario ya se encuentra registrado')
+        return done ()
     }
     
+
     const newUser = {
         username, 
-        password
+        password: await user.encryptPassword(password)
     }
     
     await user.saveUser(newUser)
@@ -82,12 +81,13 @@ passport.use('login', new LocalStrategy(async (username, password, done) => {
         return done(null, false)
     }
 
-    if (userLog.password != password) {
+    const match = await user.matchPassword(password, userLog.password)
+
+    if (!match) {
         return done(null, false)
     }
 
     user.contador = 0 
-
     return done(null,userLog)
 }))
 
@@ -120,8 +120,10 @@ function autenticacion (req, res, next) {
 
 app.post('/api/registro' , passport.authenticate('register', {failureRedirect: '/api/errorRegistro', successRedirect: '/api/login'}))
 
-app.get('/api/errorRegistro', (req, res) => {
-    res.render('errorRegistro' , {})
+app.get('/api/errorRegistro', async (req, res) => {
+    let username = await req.session.user
+    console.log(username, 'del error')
+    res.render('errorRegistro' , {username : username})
 })
 
 app.get('/api/registro', (req, res) => {
@@ -131,7 +133,7 @@ app.get('/api/registro', (req, res) => {
 //lOGOUT
 
 app.post('/api/logout' , async (req, res) => {
-    let username = await req.session.username
+    let username = await req.session.user
     console.log('nombre de logout',username)
     await req.session.destroy(err => {
         if (err) {
@@ -164,8 +166,8 @@ app.get('/api/productos-test', autenticacion, async (req , res) => {
     } 
     req.user.contador++
 
-    let username = await req.session.username
-    console.log('el username en logged es:', await req.session.username)
+    let username = await req.user.name
+    console.log('el username en logged es:', username)
     try{
         productosTest.popular()
         let prod = productosTest.getAllTest();
