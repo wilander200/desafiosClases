@@ -120,8 +120,10 @@ passport.serializeUser(function(user, done) {
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(require('./routes/index.routes'))
+//ROUTES DEL PROGRAMA
 
+app.use(require('./routes/index.routes.js'))
+app.use(require('./routes/ejercicio.routes.js'))
 
 /* ESQUEMAS A NORMALIZAR */
 
