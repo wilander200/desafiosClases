@@ -23,14 +23,14 @@ router.get('/info', async (req, res) => {
 
 router.get('/api/randoms/:cant?', (req , res) => {
 
-    const cant = Number(req.query.cant) || 100
+    const cant = Number(req.params.cant) || 100000000
     const computo = fork(path.resolve(process.cwd(), './api/calculoRandom.js'))
 
     computo.on('message', result => {
         if (result == 'listo') {
             computo.send(cant)
         } else {
-            res.send({result})
+            res.send(result)
         }
     })
 })
