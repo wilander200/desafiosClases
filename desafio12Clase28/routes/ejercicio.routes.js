@@ -21,20 +21,16 @@ router.get('/info', async (req, res) => {
 
 //RUTA DE LA API RANDOM
 
-router.get('/api/randoms', (req , res) => {
+router.get('/api/randoms/:cant?', (req , res) => {
 
-    const {num} = req.params
+    const cant = Number(req.query.cant) || 100
     const computo = fork(path.resolve(process.cwd(), './api/calculoRandom.js'))
 
     computo.on('message', result => {
         if (result == 'listo') {
-            computo.send('start')
+            computo.send(cant)
         } else {
-            res.render('randoms' , 
-                {numGenerados: result.numeroRandom,
-                numRepetidos: result.numerosRepet
-                }
-            )
+            res.send({result})
         }
     })
 })
