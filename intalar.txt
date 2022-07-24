@@ -36,6 +36,12 @@ npm i passport-local
 
 npm i dotenv
 
+npm i cluster
 
+tasklist /fi "imagename eq node.exe"
+
+npm i -g forever 
+
+npm i -g pm2
 
 
