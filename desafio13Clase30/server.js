@@ -12,14 +12,19 @@ const LocalStrategy = require('passport-local').Strategy
 const ClassUserMDB = require('./public/ClaseUsuariosMDB.js')
 const parseArgs = require('minimist')
 const dotenv = require('dotenv').config()
+const cluster = require('cluster')
+const os = require('os')
+
+
 
 
 //CONFIGURACION DEL MINIMIST
 const options = {
-    alias: { p: 'PORT' , s: SERVIDOR},
-    default: {PORT: 8080 , SERVIDOR: fork}
+    alias: { p: 'PORT' , m: 'MODO'},
+    default: {PORT: 8080 , MODO: 'fork'}
 }
 const {PORT} = parseArgs(process.argv.slice(2), options)
+const {MODO} = parseArgs(process.argv.slice(3), options)
 
 //LLAMADO A LOS DATOS DEL DOTENV
 const urlMensajes = process.env.URL_MENSAJES_DB

@@ -3,6 +3,9 @@ const router = Router()
 const args = process.argv
 const { fork } = require('child_process')
 const path = require('path')
+const os = require('os')
+
+const nCpus = os.cpus().length
 
 
 //RUTA DE LA INFORMACION 
@@ -15,7 +18,8 @@ router.get('/info', async (req, res) => {
         rss: process.memoryUsage.rss(),
         pathEjecucion: process.execPath,
         processID: process.pid,
-        CarpetaProyecto: args[1].split("/").pop()
+        CarpetaProyecto: args[1].split("/").pop(),
+        procesadores: nCpus
     })
 })
 
