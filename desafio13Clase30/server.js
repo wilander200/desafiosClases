@@ -16,8 +16,8 @@ const dotenv = require('dotenv').config()
 
 //CONFIGURACION DEL MINIMIST
 const options = {
-    alias: { p: 'PORT'},
-    default: {PORT: 8080}
+    alias: { p: 'PORT' , s: SERVIDOR},
+    default: {PORT: 8080 , SERVIDOR: fork}
 }
 const {PORT} = parseArgs(process.argv.slice(2), options)
 
