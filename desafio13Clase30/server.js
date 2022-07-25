@@ -14,9 +14,7 @@ const parseArgs = require('minimist')
 const dotenv = require('dotenv').config()
 const cluster = require('cluster')
 const os = require('os')
-
-
-
+ 
 
 //CONFIGURACION DEL MINIMIST
 const options = {
@@ -34,6 +32,18 @@ const secretWord = process.env.SESSION_SECRETWORD
 
 const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
 const messages = new Message(urlMensajes);
+
+
+//GENERANDO LOS SERVIDORES CLUSTER Y FORK
+
+if ((MODO == 'cluster') && cluster.isPrimary) {
+    const nCpus = os.cpus().length
+
+    for (let i = 0; i < nCpus; i++) {
+        cluster.fork() } 
+        cluster.on('exit', worker => { console.log('Worker ' + process.pid + ' murio') 
+        cluster.fork() }) 
+    } else {
 
 
 const app = express();
@@ -166,3 +176,4 @@ async function msn(socket) {
         console.log(err)
     } 
     }
+}
