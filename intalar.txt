@@ -44,4 +44,11 @@ npm i -g forever
 
 npm i -g pm2
 
+npm i compression 
+
+npm i log4js
+
+npm i winston 
+
+npm i pino 
 
