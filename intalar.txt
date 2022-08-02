@@ -52,3 +52,5 @@ npm i winston
 
 npm i pino 
 
+npm i -g artillery
+

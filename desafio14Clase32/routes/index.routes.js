@@ -85,13 +85,13 @@ router.get('/' , autenticacion, (req, res) => {
     res.redirect('/api/productos-test')
 })
 
-//EL RESTO DELAS RUTAS 
+//EL RESTO DELAS RUTAS lo tuve que apagar para que funcionara la ruta /info para seguir con las otras pruebas 
 
-router.all('*', (req, res) => {
-    const { url, method } = req
-    logger.warn(`Ruta ${method} ${url} no implementada`)
-    res.send(`Ruta ${method} ${url} no implementada`)
-})
+//router.all('*', (req, res) => {
+//    const { url, method } = req
+//    logger.warn(`Ruta ${method} ${url} no implementada`)
+//    res.send(`Ruta ${method} ${url} no implementada`)
+//})
 
 
 module.exports = router;
