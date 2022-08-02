@@ -54,3 +54,7 @@ npm i pino
 
 npm i -g artillery
 
+npm i autocannon --save
+
+npm i -g 0x
+
