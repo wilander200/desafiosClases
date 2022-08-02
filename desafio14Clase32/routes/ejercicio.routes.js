@@ -6,8 +6,7 @@ const path = require('path')
 const os = require('os')
 const compression = require('compression')
 const logger = require('../utils/logger.js')
-const autocannon = require('autocannon')
-const {PassThrough} = require('stream')
+
 
 const nCpus = os.cpus().length
 
@@ -16,16 +15,30 @@ const nCpus = os.cpus().length
 
 router.get('/info', async (req, res) => {
     logger.info('Accediendo a la informacion sin comprimir')
-    //console.log({
-    //    argumentoEntrada : args,
-    //    sistemaOperativo: process.platform,
-    //    nodeVersion: process.version,
-    //    rss: process.memoryUsage.rss(),
-    //    pathEjecucion: process.execPath,
-    //    processID: process.pid,
-    //    CarpetaProyecto: args[1].split("/").pop(),
-    //    procesadores: nCpus,
-    //})
+    res.render('info' , 
+    {argumentoEntrada : args,
+        sistemaOperativo: process.platform,
+        nodeVersion: process.version,
+        rss: process.memoryUsage.rss(),
+        pathEjecucion: process.execPath,
+        processID: process.pid,
+        CarpetaProyecto: args[1].split("/").pop(),
+        procesadores: nCpus,
+    })
+})
+
+router.get('/infoBloq', async (req, res) => {
+    logger.info('Accediendo a la informacion sin comprimir')
+    console.log({
+        argumentoEntrada : args,
+        sistemaOperativo: process.platform,
+        nodeVersion: process.version,
+        rss: process.memoryUsage.rss(),
+        pathEjecucion: process.execPath,
+        processID: process.pid,
+        CarpetaProyecto: args[1].split("/").pop(),
+        procesadores: nCpus,
+    })
     res.render('info' , 
     {argumentoEntrada : args,
         sistemaOperativo: process.platform,
