@@ -10,41 +10,11 @@ const MongoStore = require('connect-mongo')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const ClassUserMDB = require('./public/ClaseUsuariosMDB.js')
-const parseArgs = require('minimist')
-const dotenv = require('dotenv').config()
-const cluster = require('cluster')
-const os = require('os')
- 
-
-//CONFIGURACION DEL MINIMIST
-const options = {
-    alias: { p: 'PORT' , m: 'MODO'},
-    default: {PORT: 8080 , MODO: 'fork'}
-}
-const {PORT} = parseArgs(process.argv.slice(2), options)
-const {MODO} = parseArgs(process.argv.slice(3), options)
-
-//LLAMADO A LOS DATOS DEL DOTENV
-const urlMensajes = process.env.URL_MENSAJES_DB
-const urlSession = process.env.URL_SESSION_MONGODB
-const secretWord = process.env.SESSION_SECRETWORD
-
 
 const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
-const messages = new Message(urlMensajes);
+const messages = new Message('./db/mensajes.txt');
 
-
-//GENERANDO LOS SERVIDORES CLUSTER Y FORK
-
-if ((MODO == 'cluster') && cluster.isPrimary) {
-    const nCpus = os.cpus().length
-
-    for (let i = 0; i < nCpus; i++) {
-        cluster.fork() } 
-        cluster.on('exit', worker => { console.log('Worker ' + process.pid + ' murio') 
-        cluster.fork() }) 
-    } else {
-
+const PORT = process.env.PORT || 8080
 
 const app = express();
 const httpServer = new HttpServer(app)
@@ -56,10 +26,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: urlSession,
+        mongoUrl: 'mongodb+srv://wilander200:Wilander.200@cluster0.pw5qlwv.mongodb.net/session?retryWrites=true&w=majority',
         mongoOptions:advancedOptions
     }),
-    secret: secretWord,
+    secret: 'ecommerceDesafio',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -67,7 +37,10 @@ app.use(session({
     }
 }))
 
-app.engine('handlebars', handlebars.engine())
+app.engine('handlebars', handlebars.engine({
+    extname: ".handlebars",
+    defaultLayout: 'index.handlebars',
+}))
 
 app.set('views', './public/views')
 
@@ -135,10 +108,8 @@ passport.serializeUser(function(user, done) {
 app.use(passport.initialize())
 app.use(passport.session())
 
-//ROUTES DEL PROGRAMA
+app.use(require('./routes/index.routes'))
 
-app.use(require('./routes/index.routes.js'))
-app.use(require('./routes/ejercicio.routes.js'))
 
 /* ESQUEMAS A NORMALIZAR */
 
@@ -176,4 +147,3 @@ async function msn(socket) {
         console.log(err)
     } 
     }
-}

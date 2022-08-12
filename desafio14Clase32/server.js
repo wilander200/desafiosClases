@@ -22,7 +22,7 @@ const options = {
     alias: { p: 'PORT' , m: 'MODO'},
     default: {PORT: 8080 , MODO: 'fork'}
 }
-const {PORT} = parseArgs(process.argv.slice(2), options)
+const {PORT} = parseArgs(process.argv.slice(2), options) || process.env.PORT
 const {MODO} = parseArgs(process.argv.slice(3), options)
 
 //LLAMADO A LOS DATOS DEL DOTENV

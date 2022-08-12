@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
 const models = require("../models/User.js")
 const bcrypt = require('bcryptjs')
-const dotenv = require('dotenv').config()
 
 ReadFromDB();
 
 async function ReadFromDB() {
 
     try {
-        const URL = process.env.URL_USERS_MONGODB
+        const URL = 'mongodb+srv://wilander200:Wilander.200@cluster0.pw5qlwv.mongodb.net/users?retryWrites=true&w=majority'
 
         let conection = await mongoose.connect(URL)
-        console.log('Conexion a base de datos usuarios OK')
+        console.log('Conexion OK')
 
         return
     } catch (error) {
