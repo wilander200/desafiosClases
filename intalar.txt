@@ -58,3 +58,7 @@ npm i autocannon --save
 
 npm i -g 0x
 
+npm i nodemailer
+
+npm i twilio
+
