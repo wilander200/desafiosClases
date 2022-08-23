@@ -3,6 +3,7 @@ const router = Router()
 const passport = require('passport')
 const ApiProductosTets = require('../utils/pruebas/productos-tes.js')
 const logger = require('../services/logger.js')
+require('../services/passport/auth.js')
 
 const productosTest = new ApiProductosTets();
 

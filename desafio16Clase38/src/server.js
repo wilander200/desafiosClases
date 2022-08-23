@@ -8,14 +8,11 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const ClassUserMDB = require('../DAO/ClaseUsuariosMDB.js')
 const parseArgs = require('minimist')
 const dotenv = require('dotenv').config()
 const cluster = require('cluster')
 const os = require('os')
 const logger = require('../services/logger.js')
-
 
 //CONFIGURACION DEL MINIMIST
 const options = {
@@ -29,11 +26,6 @@ const {MODO} = parseArgs(process.argv.slice(3), options)
 const urlMensajes = process.env.URL_MENSAJES_DB
 const urlSession = process.env.URL_SESSION_MONGODB
 const secretWord = process.env.SESSION_SECRETWORD
-
-
-const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
-const messages = new Message(urlMensajes);
-
 
 //GENERANDO LOS SERVIDORES CLUSTER Y FORK
 
@@ -57,6 +49,9 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use(express.json())
 app.use(cookieParser())
+
+const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
+
 app.use(session({
     store: MongoStore.create({
         mongoUrl: urlSession,
@@ -72,66 +67,10 @@ app.use(session({
 
 app.engine('handlebars', handlebars.engine())
 
-app.set('views', './public/views')
+app.set('views', '../public/views')
 
 app.set('view engine', 'handlebars')
 
-//PASSPORT REGISTRO
-
-const user = new ClassUserMDB()
-
-passport.use('register', new LocalStrategy({
-    passReqToCallback: true,
-}, async (req, username, password, done) => {
-
-    const users = await user.getAll()
-    const usuario = users.find(usuario => usuario.username == username)
-    if (usuario) {
-        return done ()
-    }
-    
-
-    const newUser = {
-        username, 
-        password: await user.encryptPassword(password)
-    }
-    
-    await user.saveUser(newUser)
-
-    return done(null, newUser)
-}))
-
-// PASSPORT LOGIN 
-
-passport.use('login', new LocalStrategy(async (username, password, done) => {
-
-    const usuarios = await user.getAll()
-    const userLog = usuarios.find(usuario => usuario.username == username)
-    if (!userLog) {
-        return done(null, false)
-    }
-
-    const match = await user.matchPassword(password, userLog.password)
-
-    if (!match) {
-        return done(null, false)
-    }
-
-    user.contador = 0 
-    return done(null,userLog)
-}))
-
-//SERIALIZAR Y DESERIALIZAR
-
-passport.serializeUser(function(user, done) {
-    done(null, user.username)
-  })
-  
-  passport.deserializeUser(async function(username, done) {
-    const usuarios = await user.getAll()
-    const usuario = usuarios.find(usuario => usuario.username == username)
-    done(null, usuario)
-  })
 
 //MIDELWARES DE PASSPORT
 
@@ -151,13 +90,17 @@ const mensajeria = new schema.Entity('messages', {authores: author}, {idAttribut
 
 const schemaChat = new schema.Entity('mensajes', {mensajes: [mensajeria]} , {idAttribute: 'id'})
 
-// MENSAJERIA 
+// MENSAJERIA
+
+const messages = new Message(urlMensajes);
 
 io.on('connection', msn)
 
 httpServer.listen(PORT, () => {
     logger.info('servidor http escuchando en el puerto ' + PORT)
 })
+
+
 
 async function msn(socket) {
         logger.info('Un cliente se ha conectado!')
