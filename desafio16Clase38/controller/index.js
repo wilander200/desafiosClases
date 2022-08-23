@@ -5,7 +5,9 @@ const passport = require('passport')
 
 const productosTest = new ApiProductosTets();
 
-function autenticacion (req, res, next) {
+//MIDELWARE DE AUTENTICACION
+
+const autenticacion = async (req, res, next) => {
     if (req.isAuthenticated()) {
         next()
     } else {
@@ -77,7 +79,6 @@ const rutaInicio = async (req, res) => {
 
 const rutaError = (req, res) => {
     const { url, method } = req
-    logger.warn(`Ruta ${method} ${url} no implementada`)
     res.send(`Ruta ${method} ${url} no implementada`)
 }
 
