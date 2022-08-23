@@ -1,8 +1,8 @@
 const {Router} = require('express')
 const router = Router()
 const passport = require('passport')
-const ApiProductosTets = require('../api/productos-tes.js')
-const logger = require('../utils/logger.js')
+const ApiProductosTets = require('../utils/pruebas/productos-tes.js')
+const logger = require('../services/logger.js')
 
 const productosTest = new ApiProductosTets();
 

@@ -5,7 +5,7 @@ const { fork } = require('child_process')
 const path = require('path')
 const os = require('os')
 const compression = require('compression')
-const logger = require('../utils/logger.js')
+const logger = require('../services/logger.js')
 
 
 const nCpus = os.cpus().length
