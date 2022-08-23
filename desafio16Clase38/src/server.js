@@ -2,8 +2,6 @@ const express = require('express')
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 const handlebars = require('express-handlebars')
-const Message = require('../DAO/Mensajes.js')
-const {normalize, schema} = require('normalizr')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
@@ -13,6 +11,7 @@ const dotenv = require('dotenv').config()
 const cluster = require('cluster')
 const os = require('os')
 const logger = require('../services/logger.js')
+const msn = require('../services/mensajeria.js')
 
 //CONFIGURACION DEL MINIMIST
 const options = {
@@ -23,7 +22,7 @@ const {PORT} = parseArgs(process.argv.slice(2), options) || process.env.PORT
 const {MODO} = parseArgs(process.argv.slice(3), options)
 
 //LLAMADO A LOS DATOS DEL DOTENV
-const urlMensajes = process.env.URL_MENSAJES_DB
+
 const urlSession = process.env.URL_SESSION_MONGODB
 const secretWord = process.env.SESSION_SECRETWORD
 
@@ -82,45 +81,11 @@ app.use(passport.session())
 app.use(require('../routes/index.routes.js'))
 app.use(require('../routes/ejercicio.routes.js'))
 
-/* ESQUEMAS A NORMALIZAR */
-
-const author = new schema.Entity('author' , {} , {idAttribute: 'email'})
-
-const mensajeria = new schema.Entity('messages', {authores: author}, {idAttribute: 'id'})
-
-const schemaChat = new schema.Entity('mensajes', {mensajes: [mensajeria]} , {idAttribute: 'id'})
-
 // MENSAJERIA
-
-const messages = new Message(urlMensajes);
 
 io.on('connection', msn)
 
 httpServer.listen(PORT, () => {
     logger.info('servidor http escuchando en el puerto ' + PORT)
 })
-
-
-
-async function msn(socket) {
-        logger.info('Un cliente se ha conectado!')
-    try {
-        const chat = await messages.getAll()
-        const formatoChat = {id:'mensajes' , mensajes: chat}
-        const chatNormalizado = normalize(formatoChat , schemaChat)
-        io.sockets.emit('messages', chatNormalizado)
-
-        socket.on('new-message', async (dat) => {
-            await messages.saveMessage(dat)
-            const chat = await messages.getAll()
-            logger.info('Se agregó el nuevo mensaje correctamente')
-            const formatoChat = {id:'mensajes' , mensajes: chat}
-            const chatNormalizado = normalize(formatoChat , schemaChat)
-            io.sockets.emit('messages', chatNormalizado)
-            
-        })
-    } catch (err) {
-        logger.error(err)
-    } 
-    }
 }
