@@ -1,6 +1,7 @@
 const Message = require('../DAO/Mensajes.js')
 const {normalize, schema} = require('normalizr')
 const dotenv = require('dotenv').config()
+const logger = require('../services/logger.js')
 
 
 const urlMensajes = process.env.URL_MENSAJES_DB

@@ -64,10 +64,10 @@ app.use(session({
     }
 }))
 
+// DEFINICION DE HANDLEBARS 
+
 app.engine('handlebars', handlebars.engine())
-
 app.set('views', '../public/views')
-
 app.set('view engine', 'handlebars')
 
 
@@ -78,12 +78,14 @@ app.use(passport.session())
 
 //ROUTES DEL PROGRAMA
 
-app.use(require('../routes/index.routes.js'))
 app.use(require('../routes/ejercicio.routes.js'))
+app.use(require('../routes/index.routes.js'))
 
 // MENSAJERIA
 
 io.on('connection', msn)
+
+//CONEXION AL SERVIDOR 
 
 httpServer.listen(PORT, () => {
     logger.info('servidor http escuchando en el puerto ' + PORT)
