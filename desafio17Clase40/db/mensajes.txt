@@ -1,0 +1,100 @@
+[
+  {
+    "author": {
+      "email": "wilandervelazco@gmail.com",
+      "nombre": "wilander",
+      "apellido": "velazco",
+      "edad": "35",
+      "alias": "wilander200",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
+    },
+    "date": "26/6/2022",
+    "hour": "22:51:35",
+    "message": "prueba de mensajes",
+    "id": 1
+  },
+  {
+    "author": {
+      "email": "eurmeneta@construk.cl",
+      "nombre": "eduardo",
+      "apellido": "urmeneta",
+      "edad": "45",
+      "alias": "eduardinho",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-1024.png"
+    },
+    "date": "26/6/2022",
+    "hour": "22:53:47",
+    "message": "prueba de mensajes 2",
+    "id": 2
+  },
+  {
+    "author": {
+      "email": "MAURICIO.REYES@FULLTEC.CL",
+      "nombre": "mauricio",
+      "apellido": "reyes",
+      "edad": "45",
+      "alias": "mauri",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-1024.png"
+    },
+    "date": "28/6/2022",
+    "hour": "16:32:08",
+    "message": "prueba de mensajes 3",
+    "id": 3
+  },
+  {
+    "author": {
+      "email": "wilandervelazco@gmail.com",
+      "nombre": "",
+      "apellido": "",
+      "edad": "",
+      "alias": "",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
+    },
+    "date": "28/6/2022",
+    "hour": "17:05:20",
+    "message": "prueba de mensajes 4",
+    "id": 4
+  },
+  {
+    "author": {
+      "email": "jlmeyer@iaustralis.cl",
+      "nombre": "julian",
+      "apellido": "meyer",
+      "edad": "30",
+      "alias": "jules",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
+    },
+    "date": "17/7/2022",
+    "hour": "22:58:54",
+    "message": "prueba de mensaje 5",
+    "id": 5
+  },
+  {
+    "author": {
+      "email": "MAURICIO.REYES@FULLTEC.CL",
+      "nombre": "mauricio",
+      "apellido": "reyes",
+      "edad": "23",
+      "alias": "mauri",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
+    },
+    "date": "31/7/2022",
+    "hour": "23:54:13",
+    "message": "prueba de mensajes 6",
+    "id": 6
+  },
+  {
+    "author": {
+      "email": "MAURICIO.REYES@FULLTEC.CL",
+      "nombre": "mauricio",
+      "apellido": "reyes",
+      "edad": "23",
+      "alias": "mauri",
+      "avatar": "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-512.png"
+    },
+    "date": "31/7/2022",
+    "hour": "23:56:04",
+    "message": "prueba de mensajes 6",
+    "id": 7
+  }
+]
