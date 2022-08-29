@@ -1,3 +1,5 @@
+const tranfProdDTO = require('../DTO/productosDTO.js')
+
 
 class Contenedor {
     constructor (){
@@ -5,7 +7,8 @@ class Contenedor {
     }
 
     getAllTest() {
-        return [...this.productos]
+        const prod = [...this.productos]
+        return tranfProdDTO(prod)
     }
 
     SaveProductoTest(prod){
@@ -18,7 +21,7 @@ class Contenedor {
 
         const newProd = {...prod , id: newId}
         this.productos.push(newProd)
-        return newProd
+        return tranfProdDTO(newProd)
     }
     
 }

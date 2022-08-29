@@ -1,4 +1,5 @@
 const fs = require("fs");
+const tranfMsnDTO = require('../DTO/mensajesDTO.js')
 
 class Message {
     constructor (file){
@@ -21,7 +22,8 @@ class Message {
                                 edad: dat.author.edad,
                                 alias: dat.author.alias,
                                 avatar: dat.author.avatar}, 
-                        date: dat.date, hour: dat.hour , 
+                        date: dat.date, 
+                        hour: dat.hour , 
                         message: dat.message,
                         id: newId})
             fs.writeFileSync(this.file , JSON.stringify(dato, null, 2), error => {
@@ -37,7 +39,8 @@ class Message {
     getAll() {
         const arrayProductos = fs.readFileSync(this.file, 'utf-8')
             let dato =  JSON.parse(arrayProductos);
-            return dato
+            console.log(tranfMsnDTO(dato))
+            return tranfMsnDTO(dato) 
     }
 }
 

@@ -45,7 +45,7 @@ socket.on("messages", chatNormalizado => {
     document.getElementById("porcentajeNormalizado").innerHTML = porcentajeChat
 
     const html = mensajes.map((elem) => {
-        return (`<div><spam class="fw-bolder text-primary m-2"> ${elem.author.email}</spam><spam style="color: brown;">[${elem.date}  ${elem.hour}]</spam> <spam class="fst-italic text-success m-2"> ${elem.message} </spam>  <spam class="m-2"><img width="50" src=${elem.author.avatar} alt="not found"></spam></div>`)
+        return (`<div><spam class="fw-bolder text-primary m-2"> ${elem.email}</spam><spam style="color: brown;">[${elem.date}  ${elem.hour}]</spam> <spam class="fst-italic text-success m-2"> ${elem.message} </spam>  <spam class="m-2"><img width="50" src=${elem.avatar} alt="not found"></spam></div>`)
     })
             .join("  ")
         document.getElementById("messages").innerHTML = html
