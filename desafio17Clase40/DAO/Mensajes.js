@@ -1,5 +1,6 @@
 const fs = require("fs");
 const tranfMsnDTO = require('../DTO/mensajesDTO.js')
+const logger = require('../services/logger.js')
 
 class Message {
     constructor (file){
@@ -28,9 +29,9 @@ class Message {
                         id: newId})
             fs.writeFileSync(this.file , JSON.stringify(dato, null, 2), error => {
                 if (error) {
-                    console.log("hubo un error al escribir")
+                    logger.error("hubo un error al escribir")
                 } else {
-                    console.log("se pudo usar el SaveObject correctamente")
+                    logger.info("se pudo usar el SaveObject correctamente")
                 }
             }
             )
@@ -39,7 +40,6 @@ class Message {
     getAll() {
         const arrayProductos = fs.readFileSync(this.file, 'utf-8')
             let dato =  JSON.parse(arrayProductos);
-            console.log(tranfMsnDTO(dato))
             return tranfMsnDTO(dato) 
     }
 }

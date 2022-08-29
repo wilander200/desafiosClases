@@ -8,18 +8,15 @@ const urlMensajes = process.env.URL_MENSAJES_DB
 
 const messages = new Message(urlMensajes)
 
-
 /* ESQUEMAS A NORMALIZAR */
 
 const author = new schema.Entity('author' , {} , {idAttribute: 'email'})
-
 const mensajeria = new schema.Entity('messages', {authores: author}, {idAttribute: 'id'})
-
 const schemaChat = new schema.Entity('mensajes', {mensajes: [mensajeria]} , {idAttribute: 'id'})
 
 //funcion de mensajeria
 
-async function msn(socket) {
+const msn = async (socket) => {
     logger.info('Hay conexión para enviar mensajes!')
 try {
     const chat = await messages.getAll()
