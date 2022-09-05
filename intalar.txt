@@ -62,3 +62,9 @@ npm i nodemailer
 
 npm i twilio
 
+npm i axios
+
+npm i cors 
+
+npm i -d mocha supertest chai 
+
