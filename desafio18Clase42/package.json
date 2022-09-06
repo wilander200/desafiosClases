@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node benchmark.js",
+    "test": "mocha server.test.js",
     "start": "0x server.js"
   },
   "keywords": [],

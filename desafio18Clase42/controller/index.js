@@ -59,6 +59,9 @@ const errorLogin = async (req, res) => {
     res.render('errorLogin' , {})
 }
 
+// productos 
+
+
 const productosGet = async (req , res) => {
     try{
         await productosTest.popular()
