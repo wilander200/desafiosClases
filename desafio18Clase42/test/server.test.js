@@ -5,7 +5,10 @@ const axios = require('axios')
 const expect = require('chai').expect
 
 const postProd = producto => axios.post('http://localhost:8080/api/productos', {producto})
-const getProducto = () => axios('http://localhost:8080/api/productos')
+const getProd = () => axios.get('http://localhost:8080/api/productos')
+const getIdProd = () => axios.get('http://localhost:8080/api/productos/1')
+const putProd = producto => axios.put('http://localhost:8080/api/productos/1', {producto})
+const deleteProd = () => axios.get('http://localhost:8080/api/productos/1')
 
 describe("Comprobando que el servidor de productos funcione", function() {
     beforeEach(async function(){
@@ -18,6 +21,7 @@ describe("Comprobando que el servidor de productos funcione", function() {
             price: 1111,
             thumbnail: 'foto de prueba'
         }
+        await postProd(producto)
         const res = await request.post('/api/productos').send(producto)
         console.log(res.statusCode)
         //expect(res.body.title).to.eql(producto.title)
@@ -28,6 +32,7 @@ describe("Comprobando que el servidor de productos funcione", function() {
     })
 
     it ("Verificar funcion GET productos", async function (){
+        await getProd()
         const res = await request.get('/api/productos')
         console.log(res.statusCode)
         expect(res.statusCode).to.eql(200)
@@ -35,6 +40,7 @@ describe("Comprobando que el servidor de productos funcione", function() {
     })
 
     it ("Verificar GET por id", async function (){
+        await getIdProd()
         const res = await request.get('/api/productos/1')
         //console.log(res.body)
         console.log(res.statusCode)
@@ -51,6 +57,7 @@ describe("Comprobando que el servidor de productos funcione", function() {
             "price": 1234,
             "thumbnail": 'foto de prueba cambiada'
         }
+        await putProd(producto)
         const res = await request.put('/api/productos/1').send(producto)
         console.log(res.body)
         console.log(res.statusCode)
@@ -62,6 +69,7 @@ describe("Comprobando que el servidor de productos funcione", function() {
     })
 
     it ("Verificar el DELETE de producto", async function (){
+        await deleteProd()
         const res = await request.delete('/api/productos/1')
         console.log(res.body)
         console.log(res.statusCode)
