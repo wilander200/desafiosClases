@@ -13,6 +13,7 @@ const cluster = require('cluster')
 const os = require('os')
 const logger = require('../services/logger.js')
 const msn = require('../services/mensajeria.js')
+const morgan = require('morgan')
 
 //CONFIGURACION DEL MINIMIST
 const options = {
@@ -50,6 +51,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use(express.json())
 app.use(cookieParser())
+app.use(morgan('dev'))
 
 const advancedOptions = { useNewUrlParser: true , useUnifiedTopology: true}
 

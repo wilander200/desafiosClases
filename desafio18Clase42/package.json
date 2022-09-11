@@ -34,6 +34,7 @@
     "minimist": "^1.2.6",
     "mocha": "^10.0.0",
     "mongoose": "^6.4.4",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.19",
     "normalizr": "^3.6.2",
