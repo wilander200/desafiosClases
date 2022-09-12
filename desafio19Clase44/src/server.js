@@ -13,6 +13,9 @@ const cluster = require('cluster')
 const os = require('os')
 const logger = require('../services/logger.js')
 const msn = require('../services/mensajeria.js')
+const swaggerUi = require('swagger-ui-express')
+const {swaggerSpecs} = require('./swaggerSpecs.js')
+
 
 //CONFIGURACION DEL MINIMIST
 const options = {
@@ -80,6 +83,7 @@ app.use(passport.session())
 
 //ROUTES DEL PROGRAMA
 
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 app.use(require('../routes/ejercicio.routes.js'))
 app.use(require('../routes/index.routes.js'))
 
