@@ -1,47 +1,45 @@
-const tranfProdDTO = require('../DTO/productosDTO.js')
-
-class Contenedor {
+class productosDAO {
     constructor (){
         this.productos = [];
-        this.id = 0
     }
 
-    saveProducto({title, price, thumbnail}) {
-            this.id++
-            const newProducto = ({id: this.id, title: title , price: Number(price), thumbnail: thumbnail})
-            this.productos.push(newProducto)
-            return tranfProdDTO(newProducto)
+    guardarProducto(producto) {
+            this.productos.push(producto)
+            return this.getProductos()
     }
 
-    saveProductoById(id, {title, price, thumbnail}) {
+    actualizarProducto(id, {title, price, thumbnail}) {
         const pos = this.productos.findIndex(prod => prod.id === parseInt(id))
         if (pos < 0){
             return undefined
         }
         const nuevoProducto = {id: parseInt(id) , title , price , thumbnail}
         this.productos.splice(pos, 1 , nuevoProducto)
-        return(tranfProdDTO(nuevoProducto))
+        return(nuevoProducto)
     }
 
-    getById(id) {
+    getProdutoID(id) {
         const findProductos = this.productos.find(prod => prod.id === parseInt(id))
-        return tranfProdDTO(findProductos)  
+        if (findProductos == undefined){
+            throw new Error ('Producto no encontrado')
+        }
+        return findProductos  
     }
 
-    getAll() {
-        return tranfProdDTO(this.productos)
+    getProductos() {
+        return this.productos
     }
 
-    deleteByIdNumber(id){
+    deleteProducto(id){
         const filterProductos = this.productos.filter(prod => prod.id !== parseInt(id))
         const pos = this.productos.findIndex(prod => prod.id === parseInt(id))
         if (pos < 0){
-            return undefined
+            throw new Error ('Producto no encontrado')
         }
         this.productos = filterProductos
-        return tranfProdDTO(this.productos)
+        return this.productos
     }
     }
 
 
-module.exports = Contenedor;
+module.exports = productosDAO;
