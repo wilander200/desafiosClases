@@ -70,3 +70,5 @@ npm i -d mocha supertest chai
 
 npm i swagger-ui-express swagger-jsdoc
 
+npm i graphql express-graphql --save
+
