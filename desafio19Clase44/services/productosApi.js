@@ -11,11 +11,11 @@ class productosApi {
         return this.dao.getProductos()
     }
     getProductoID = ({id}) => {
-        return this.dao.getProductoID(id)
+        return this.dao.getProdutoID(id)
     }
     guardarProducto = ({dat}) => {
         this.id++
-        const nuevoProducto = new productoModel(id, dat)
+        const nuevoProducto = new productoModel(this.id, dat)
         this.dao.guardarProducto(nuevoProducto)
         return nuevoProducto
     }
@@ -24,8 +24,7 @@ class productosApi {
         return nuevoProducto
     }
     deleteProducto = ({id}) => {
-        const elm = this.dao.deleteProducto(id)
-        return elm
+        return this.dao.deleteProducto(id)
     }
 }
 

@@ -7,12 +7,12 @@ const schema = buildSchema(`
     type Producto {
         id: ID!
         title: String,
-        price: Number,
+        price: Float,
         thumbnail: String
     }
     input ProductoInput {
         title: String,
-        price: Number,
+        price: Float,
         thumbnail: String
     }
     type Query {
@@ -21,8 +21,8 @@ const schema = buildSchema(`
     }
     type Mutation {
         guardarProducto(dat: ProductoInput): Producto,
-        actualizarProducto(dat: ProductoInput | id: ID!): Producto,
-        deleteProducto(id: ID!): Producto
+        actualizarProducto(dat: ProductoInput, id: ID!): Producto,
+        deleteProducto(id: ID!): [Producto]
     }
 `)
 
@@ -36,10 +36,10 @@ class productosController {
             schema: schema,
             rootValue: {
                 getProductos: api.getProductos,
-                getProductoID: api.getProductoID,
+                getProductoId: api.getProductoID,
                 guardarProducto: api.guardarProducto,
                 actualizarProducto: api.actualizarProducto,
-                deleteProducto: api.deleteProducto
+                deleteProducto: api.deleteProducto,
             },
             graphiql: true
         })

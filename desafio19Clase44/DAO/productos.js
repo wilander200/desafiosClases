@@ -9,7 +9,7 @@ class productosDAO {
     }
 
     actualizarProducto(id, {title, price, thumbnail}) {
-        const pos = this.productos.findIndex(prod => prod.id === parseInt(id))
+        const pos = this.productos.findIndex(prod => prod.id == id)
         if (pos < 0){
             return undefined
         }
@@ -19,7 +19,7 @@ class productosDAO {
     }
 
     getProdutoID(id) {
-        const findProductos = this.productos.find(prod => prod.id === parseInt(id))
+        const findProductos = this.productos.find(prod => prod.id == id)
         if (findProductos == undefined){
             throw new Error ('Producto no encontrado')
         }
@@ -31,12 +31,11 @@ class productosDAO {
     }
 
     deleteProducto(id){
-        const filterProductos = this.productos.filter(prod => prod.id !== parseInt(id))
-        const pos = this.productos.findIndex(prod => prod.id === parseInt(id))
+        const pos = this.productos.findIndex(prod => prod.id == id)
+        const filterProductos = this.productos.splice(pos, 1)
         if (pos < 0){
             throw new Error ('Producto no encontrado')
         }
-        this.productos = filterProductos
         return this.productos
     }
     }
