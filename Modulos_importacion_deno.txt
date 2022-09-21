@@ -1,0 +1,7 @@
+para los colores y estilos de texto, donde debes importar cada color y estilo a usar por su nombre 
+
+import { black, white , red , bgWhite } from "https://deno.land/std@0.100.0/fmt/colors.ts"
+
+para crear un servidor HTTP se debe ejecutar el siguiente codigo
+
+import * as mod from "https://deno.land/std@0.100.0/http/mod.ts";
